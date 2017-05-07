@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>登录</title>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='/stylesheets/loginRegist.css' />
+  </head>
+  <body>
+
+    <!-- <form action="/users/login" method="post" id="reg-form" class="form"> -->
+<!--     <h1>
+        登录：
+    </h1>
+    
+    <p>
+        <lable>用户名：</lable>
+        <input id="username" type="text" name="username">
+    </p>
+    <p>
+        <lable>密码：</lable>
+        <input type="text" id="password" name="password">
+    </p>
+    <p>
+        <input type="submit" value="登录">
+    </p> -->
+   <!-- </form> -->
+    <div id="container_demo" >
+        <div id="wrapper">
+          
+            <div id="login" class="animate form">
+                <form  action="/users/login" method="post" id="reg-form"> 
+                    <h1>Login</h1> 
+                    <p> 
+                        <label for="">用户名</label>
+                        <input id="username" type="text" name="username" class="in"/>
+                    </p>
+                    <p> 
+                        <label for="">密码</label>
+                        <input id="password" name="password" type="password" class="in"/> 
+                    </p>
+                   
+                    <p class="login button"> 
+                        <input type="submit" value="登录" /> 
+                    </p>
+                </form>
+            </div>
+
+        </div>
+    </div>  
+ 
+
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+
+              $('#username').on('blur',function(){
+                    var that = this;
+                    if($.trim(this.value) == ""){
+                        alert("请输入用户名！");
+                        }
+                    });
+
+               $('#reg-form').submit(function(e){
+                    if ($("#username").val().trim() == "") {
+                            alert('请输入用户名！');
+                            e.preventDefault();
+                    }else 
+                    if ($("#password").val().trim() == "") {
+                            alert('请输入密码！');
+                            e.preventDefault();
+                    }
+
+                return true;
+                  
+                 });
+            });   
+    </script>
+  </body>
+</html>

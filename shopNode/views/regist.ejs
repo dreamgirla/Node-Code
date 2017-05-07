@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>注册</title>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='/stylesheets/loginRegist.css' />
+</head>
+<body>
+<!-- <form action="/users/regist" method="post" id="reg-form" class="form">
+    <h1>
+        注册：
+    </h1>
+    <p>
+        <label for="" >用户名：</label>
+        <input id="username" type="text" name="username"/>
+    </p>
+    <p>
+        <label for="">密码：</label>
+        <input id="password" type="text" name="password"/>
+    </p>
+    <p>
+        <label for="">性别：</label>
+        <input type="radio" value="man" name="sex"/>男
+        <input type="radio" value="woman" name="sex"/>女
+    </p>
+    <p>
+        <input type="submit" value="注册"/>
+    </p>
+</form> -->
+                <div id="container_demo" >
+                  
+                    <div id="wrapper">
+
+                        <div id="register" class="animate form">
+                            <form  action="/users/regist" method="post" id="reg-form"> 
+                                <h1>Regist</h1> 
+                                <p> 
+                                    <label for="">用户名</label>
+                                    <input id="username" type="text" name="username" class="in" />
+                                </p>
+                                <p> 
+                                    <label for=""> 密码</label>
+                                    <input id="password" name="password" type="password" class="in"/> 
+                                </p>
+                                <p> 
+                                    <label for="">性别：</label>
+                                    <input type="radio" value="man" name="sex" />男 
+                                     &nbsp;&nbsp;&nbsp;
+                                    <input type="radio" value="woman" name="sex" >女
+                                </p>
+                                
+                                <p class="signin button"> 
+                                    <input type="submit" value="注册" id="send" /> 
+                                </p>
+                                
+                            </form>
+                        </div>  
+                    </div>
+                </div>  
+
+    <script src="/javascripts/jquery.js"></script>
+    <script>
+        $(function(){
+            $('#username').on('blur',function(){
+                var that = this;
+                if($.trim(this.value) == ""){
+                    alert("请输入用户名！");
+                    $(this).addClass("error");
+                    }
+                else{
+                    $.get('/users/checkUser',{username:this.value},function(data){
+                        if (data == 'fail') {
+                            $(that).after("<span class='exist'>用户名已存在，请重新输入用户名！</span>");
+                                $('#reg-form').submit(function(e){
+                                     e.preventDefault();
+                                    // alert("用户名已存在，请重新输入用户名");
+                                 });
+                        }
+                    });
+                }
+            });
+ 
+            $('#reg-form').submit(function(e){
+                if ($("#username").val().trim() == "") {
+                    alert('请输入用户名！');
+                    e.preventDefault();
+                }else if ($("#password").val().trim() == "") {
+                    alert('请输入密码！');
+                    e.preventDefault();
+                }else  if($('input:checked').length == 0){
+                    alert('请输入性别！');
+                    e.preventDefault();
+                }
+                return true;
+            });
+
+        });
+    </script>
+
+</body>
+</html>

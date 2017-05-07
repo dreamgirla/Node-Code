@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= product.prod_name%> - 商品详情</title>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="/stylesheets/productDetail.css"/>
+</head>
+<body>
+<div id="header">
+    <div class="wrap">
+        header
+        <div class="link">
+            <a href="/login">登录</a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="/reg">注册</a>
+        </div>
+    </div>
+</div>
+<ul id="nav" class="wrap">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">所有商品</a></li>
+    <li><a href="#">我的订单</a></li>
+    <li><a href="#">购物车</a></li>
+</ul>
+<div id="content">
+    <div id="product-info" class="clearfix">
+        <div id="product-imgs">
+        
+<!--             <div class="big-img">
+                <img src="/uploads/1.jpg" alt=""/>
+            </div>
+            <ul class="img-list">
+               <li class="selected"><img src="/uploads/2.jpg"></li>
+               <li><img src="/uploads/3.jpg"></li>
+               <li><img src="/uploads/4.jpg"></li>
+            </ul> -->
+
+            <%
+                var imgs = product.productImg;
+            %>
+            <div class="big-img">
+                <img src="/<%=imgs[0].img_src%>" alt=""/>
+            </div>
+            <ul class="img-list">
+                <%
+                    for(var i=0; i<imgs.length; i++){
+                %>
+                <li <%= i==0?'class=selected':''%>><img src="/<%=imgs[i].img_src%>" alt=""/></li>
+                <%
+                    }
+                %>
+            </ul>
+        </div>
+        <div id="product-basic">
+           <form id="product-form" action="/products/buy" method="post">
+                <!-- 往这里存，之后性这里传过去 -->
+                <input type="hidden" name="product-size" id="product-size"/>
+                <!-- 蛋糕名称 -->
+                <h1 class="form-item product-name"><%= product.prod_name%></h1>
+                <!-- 蛋糕价钱 -->
+                <p class="form-item product-price">
+                      <!-- 100.00-150.00 -->
+                    <%
+                        <!-- [150, 100, 180]，product.productSize是数组，要按价格，尺寸大小排序，a是个对象，a.size取出来大小，输出格式150-180 -->
+                        var size = product.productSize;
+                        size.sort(function(a,b){
+                            return a.size_price - b.size_price;
+                        });
+                    %>
+                    <%=size[0].size_price%> - <%=size[size.length-1].size_price%>
+                </p>
+                <!-- 蛋糕尺寸 -->
+                <div class="form-item product-size clearfix">
+                    <span style="float: left;">大小：</span>
+                        <ul class="product-size-list">
+                            <!-- <li data-price="100.00">4</li>
+                            <li data-price="150.00">6</li> -->
+                             <%
+                                 for(var i=0; i<size.length; i++){
+                             %>
+                                <li data-price="<%=size[i].size_price%>"><%=size[i].size_num%></li>
+                            <%
+                                }
+                            %>
+                        </ul>
+                </div>
+                <!-- 购买数量 -->
+                <div class="form-item product-num clearfix">
+                    <span style="float: left;">数量：</span> 
+                    <!-- 模拟加减可输入框 -->
+                   <!--  <div class="num-input">
+                        <span class="num-minus">-</span>
+                        <input type="text" id="product-num" class="num-value"/>
+                        <span class="num-add">+</span>
+                    </div> -->
+
+                    <input type="text" id="product-num"/>
+                    <!-- 把这个现存的input变为上面的格式，需要给它加上 class=“num-value”，再在这个上下加上span，最终变为上面注释掉的形式 -->
+
+                </div>
+                <!-- 按钮 -->
+                <div class="form-item btns">
+                    <input type="submit" value="立即购买"/>
+                    <input type="button" value="加入购物车"/>
+                </div>
+        </form>
+        </div>
+    </div>
+    <div id="product-detail">
+    <h2><%= product.prod_name%>商品详情</h2>
+    <p>
+     蛋糕是一种古老的西点，一般是由烤箱制作的，蛋糕是用鸡蛋、白糖、小麦粉为主要原料。以牛奶、果汁、奶粉、香粉、色拉油、水，起酥油、泡打粉为辅料。经过搅拌、调制、烘烤后制成一种像海绵的点心。
+    </p>
+    <p>
+      蛋糕是一种面食，通常是甜的，典型的蛋糕是以烤的方式制作出来。蛋糕的材料主要包括了面粉、甜味剂(通常是蔗糖)、黏合剂(一般是鸡蛋，素食主义者可用面筋和淀粉代替)、起酥油(一般是牛油或人造牛油，低脂肪含量的蛋糕会以浓缩果汁代替)，液体(牛奶，水或果汁)，香精和发酵剂(例如酵母或者发酵粉)。
+    </p>
+    </div>
+</div>
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/jquery.numinput-1.0.js"></script>
+<script src="/javascripts/productDetail.js"></script>
+
+</body>
+</html>
